@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<style type="text/css">
+.form-signin {
+	margin: 0 auto;
+	max-width: 60%;
+	padding: 12%;
+}
+</style>
+
+	<b:navBar brand="Home" brandHref="home.xhtml#" inverse="true" fixed="top" >
+		<b:navbarLinks>
+			<b:navLink value="О нас" href="about.xhtml#"></b:navLink>
+			<b:navLink value="Контакты" href="contacts.xhtml#"></b:navLink>
+			<b:navLink value="Link" href="#"></b:navLink>
+		</b:navbarLinks>
+	</b:navBar>
+</h:head>
+<h:body >
+
+
+
+	<h:form styleClass="form-signin ">
+		<b:container>
+			<b:row>
+				<b:button value="Отметить место" look="primary " outcome=""
+					size="lg" />
+			</b:row>
+			<b:row>
+				<b:button value="Найти место " look="warning " outcome="findLocation" size="lg" />
+			</b:row>
+			
+		</b:container>
+	</h:form>
+
+
+</h:body>
+</html>
