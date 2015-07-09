@@ -8,7 +8,7 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-	<b:navBar brand="Home" brandHref="home.xhtml#" inverse="true"
+	<b:navBar brand="Главная" brandHref="home.xhtml#" inverse="true"
 		fixed="top">
 		<b:navbarLinks>
 			<b:navLink value="О нас" href="about.xhtml#"></b:navLink>
@@ -20,13 +20,61 @@
 		type="text/javascript"></script>
 
 
+	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
 
-	<h:form>
+	<h:form styleClass="form-signin-find-location">
 
-		<p:gmap center="41.381542, 2.122893" zoom="15" type="HYBIRD"
-			style="width:600px;height:400px" />
+		<b:container>
+
+			<b:column col-sm="3" col-md="2" styleClass="sidebar">
+				<b:listLinks>
+					<b:navLink header="Фильтр" />
+					<b:navLink href="#" value="Overview" active="true" />
+					<b:navLink href="#" value="Reports" />
+					<b:navLink href="#" value="Analytics" />
+					<b:navLink href="#" value="Export" />
+				</b:listLinks>
+				<b:listLinks>
+					<b:navLink value="Nav item" />
+					<b:navLink value="Nav item again" />
+					<b:navLink value="One more nav" />
+					<b:navLink value="Another nav item" />
+					<b:navLink value="More navigation" />
+				</b:listLinks>
+				<b:listLinks>
+					<b:navLink value="Nav item again" />
+					<b:navLink value="One more nav" />
+					<b:navLink value="Another nav item" />
+				</b:listLinks>
+			</b:column>
+			<b:column offset="2" styleClass="main">
+				<h1>Выберете компанию</h1>
+					
+				<p:selectOneMenu value="#{findLocationsBeans.tableMapFlag}">
+					<p:ajax listener="#{findLocationsBeans.onTableMapChange}"
+						update="dataView" />
+					<f:selectItem itemLabel="Показать на карте" itemValue="1" />
+					<f:selectItem itemLabel="Показать в таблице" itemValue="0" />
+				</p:selectOneMenu>
+
+				<hr />
+			</b:column>
+			<b:column  offset="2"  >
+			
+				<p:gmap center="41.381542, 2.122893" zoom="15" type="hybrid"
+					style="width:600px;height:400px" id="dataView" rendered="#{findLocationsBeans.booltableMapFlag}"/>
+		
+			</b:column>
+
+			<b:column offset="2">
+				<a href="details.xhtml" class="btn btn-lg btn-info">Как
+					организован поиск ?</a>
+
+			</b:column>
+		</b:container>
+
 	</h:form>
 </h:body>
 </html>

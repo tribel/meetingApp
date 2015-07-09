@@ -20,6 +20,9 @@ public class FindLocationsBeans {
 	private List<Locations> locList;
 	private Locations location;
 	
+	private String  tableMapFlag ;
+	private boolean booltableMapFlag = true;
+	
 	public FindLocationsBeans() {
 	}
 
@@ -45,6 +48,44 @@ public class FindLocationsBeans {
 
 	public void setLocation(Locations location) {
 		this.location = location;
+	}
+
+	public String getTableMapFlag() {
+		return tableMapFlag;
+	}
+
+	public void setTableMapFlag(String tableMapFlag) {
+		this.tableMapFlag = tableMapFlag;
+	}
+
+	public boolean isBooltableMapFlag() {
+		return booltableMapFlag;
+	}
+
+	public void setBooltableMapFlag(boolean booltableMapFlag) {
+		this.booltableMapFlag = booltableMapFlag;
+	}
+
+	
+	/*
+	 * End of set-get methods
+	 */
+	
+	
+	public void onTableMapChange() {
+		System.out.println("FlaG =" + tableMapFlag);
+		if ( tableMapFlag.equals("0")) {
+			booltableMapFlag = true;
+		} else {
+			booltableMapFlag = false;
+		}
+		System.out.println(booltableMapFlag);
+		
+	}
+	
+	public List<Locations> findAllLocatoins() {
+		locList = locationsService.findAllLocations();
+		return locList;
 	}
 	
 	
