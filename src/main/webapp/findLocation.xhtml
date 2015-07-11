@@ -23,7 +23,7 @@
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
-
+#{findLocationsBeans.findAllLocatoins()}
 	<h:form styleClass="form-signin-find-location">
 
 		<b:container>
@@ -31,10 +31,10 @@
 			<b:column col-sm="3" col-md="2" styleClass="sidebar">
 				<b:listLinks>
 					<b:navLink header="Фильтр" />
-					<b:navLink href="#" value="Overview" active="true" />
-					<b:navLink href="#" value="Reports" />
-					<b:navLink href="#" value="Analytics" />
-					<b:navLink href="#" value="Export" />
+					<p:outputLabel for="uAdd" value="Адресс:" />
+					<p:inputText id="uAdd" value="#{findLocationsBeans.filterAddress}"
+						label="Address">
+					</p:inputText>
 				</b:listLinks>
 				<b:listLinks>
 					<b:navLink value="Nav item" />
@@ -48,24 +48,83 @@
 					<b:navLink value="One more nav" />
 					<b:navLink value="Another nav item" />
 				</b:listLinks>
+
+				<p:commandButton value="Найти" ajax="true" update="@(form)"
+					id="ajaxcb" look="primary"
+					actionListener="#{findLocationsBeans.findFilteredLocation()}" />
 			</b:column>
 			<b:column offset="2" styleClass="main">
 				<h1>Выберете компанию</h1>
-					
+
 				<p:selectOneMenu value="#{findLocationsBeans.tableMapFlag}">
 					<p:ajax listener="#{findLocationsBeans.onTableMapChange}"
-						update="dataView" />
-					<f:selectItem itemLabel="Показать на карте" itemValue="1" />
-					<f:selectItem itemLabel="Показать в таблице" itemValue="0" />
+						update="@(form)" />
+					<f:selectItem itemLabel="Показать в таблице" itemValue="1" />
+					<f:selectItem itemLabel="Показать на карте" itemValue="0" />
 				</p:selectOneMenu>
 
 				<hr />
+
 			</b:column>
-			<b:column  offset="2"  >
+
+			<b:column offset="2">
+			
+			
 			
 				<p:gmap center="41.381542, 2.122893" zoom="15" type="hybrid"
-					style="width:600px;height:400px" id="dataView" rendered="#{findLocationsBeans.booltableMapFlag}"/>
-		
+					style="width:600px;height:400px" id="dataView"
+					rendered="#{findLocationsBeans.booltableMapFlag}" />
+
+				<b:column col-md="10">
+					<h:dataTable styleClass="table table-striped"
+						value="#{findLocationsBeans.locList}" var="item"
+						rendered="#{!findLocationsBeans.booltableMapFlag}">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Создатель" />
+							</f:facet>
+							<h:outputText value="#{item.user.name}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Телефон" />
+							</f:facet>
+							<h:outputText value="#{item.user.telephone}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Старт" />
+							</f:facet>
+							<h:outputText value="#{item.startTime}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Окончание" />
+							</f:facet>
+							<h:outputText value="#{item.endTime}" />
+						</h:column>
+						<h:column rendered="#{item.description == null}">
+							<f:facet name="header">
+								<h:outputText value="Описание" />
+							</f:facet>
+							<h:outputText value="#{item.description}" />
+						</h:column>
+						<h:column rendered="#{item.wishes == null}">
+							<f:facet name="header">
+								<h:outputText value="Пожелания" />
+							</f:facet>
+							<h:outputText value="#{item.wishes}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Адресс" />
+							</f:facet>
+							<h:outputText value="#{item.address} #{item.addNumber}" />
+						</h:column>
+
+					</h:dataTable>
+				</b:column>
+
 			</b:column>
 
 			<b:column offset="2">

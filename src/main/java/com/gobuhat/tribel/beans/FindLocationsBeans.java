@@ -21,9 +21,12 @@ public class FindLocationsBeans {
 	private Locations location;
 	
 	private String  tableMapFlag ;
-	private boolean booltableMapFlag = true;
+	private boolean booltableMapFlag ;
+	
+	private String filterAddress;
 	
 	public FindLocationsBeans() {
+		//locList = locationsService.findAllLocations();
 	}
 
 	public LocationsService getLocationsService() {
@@ -65,6 +68,14 @@ public class FindLocationsBeans {
 	public void setBooltableMapFlag(boolean booltableMapFlag) {
 		this.booltableMapFlag = booltableMapFlag;
 	}
+	
+	public String getFilterAddress() {
+		return filterAddress;
+	}
+
+	public void setFilterAddress(String filterAddress) {
+		this.filterAddress = filterAddress;
+	}
 
 	
 	/*
@@ -72,20 +83,24 @@ public class FindLocationsBeans {
 	 */
 	
 	
+	
 	public void onTableMapChange() {
-		System.out.println("FlaG =" + tableMapFlag);
 		if ( tableMapFlag.equals("0")) {
 			booltableMapFlag = true;
 		} else {
 			booltableMapFlag = false;
 		}
-		System.out.println(booltableMapFlag);
 		
 	}
 	
-	public List<Locations> findAllLocatoins() {
-		locList = locationsService.findAllLocations();
-		return locList;
+	public void findAllLocatoins() {
+		locList = locationsService.findAllLocations(); 
+		
+	}
+	
+	public void findFilteredLocation() {
+		locList = locationsService.findByAddress(filterAddress, null);
+		
 	}
 	
 	
