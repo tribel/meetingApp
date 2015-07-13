@@ -23,7 +23,7 @@
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
-#{findLocationsBeans.findAllLocatoins()}
+#{findLocationsBeans.findFilteredLocation()}
 	<h:form styleClass="form-signin-find-location">
 
 		<b:container>
@@ -32,21 +32,25 @@
 				<b:listLinks>
 					<b:navLink header="Фильтр" />
 					<p:outputLabel for="uAdd" value="Адресс:" />
-					<p:inputText id="uAdd" value="#{findLocationsBeans.filterAddress}"
-						label="Address">
-					</p:inputText>
-				</b:listLinks>
-				<b:listLinks>
-					<b:navLink value="Nav item" />
-					<b:navLink value="Nav item again" />
-					<b:navLink value="One more nav" />
-					<b:navLink value="Another nav item" />
-					<b:navLink value="More navigation" />
-				</b:listLinks>
-				<b:listLinks>
-					<b:navLink value="Nav item again" />
-					<b:navLink value="One more nav" />
-					<b:navLink value="Another nav item" />
+					<p:autoComplete id="uAdd" value="#{findLocationsBeans.filterAddress}"
+						label="Address" completeMethod="#{findLocationsBeans.completeAddress}">
+					</p:autoComplete>
+
+					<br />
+					<br />
+
+					<p:outputLabel for="uDate" value="Дата:" />
+					<p:calendar id="uDate" value="#{findLocationsBeans.filterDate}"
+						showOn="button" />
+					<br />
+					<br />
+					<p:accordionPanel >
+						<p:tab title="Расширеный поиск">
+							
+						</p:tab>
+					</p:accordionPanel>
+							<br />
+							<br />
 				</b:listLinks>
 
 				<p:commandButton value="Найти" ajax="true" update="@(form)"
@@ -68,12 +72,12 @@
 			</b:column>
 
 			<b:column offset="2">
-			
-			
-			
-				<p:gmap center="41.381542, 2.122893" zoom="15" type="hybrid"
+
+
+				#{findLocationsBeans.findFilteredLocation()}
+				<p:gmap center="50.426718, 30.66419" zoom="15" type="hybrid"
 					style="width:600px;height:400px" id="dataView"
-					rendered="#{findLocationsBeans.booltableMapFlag}" />
+					rendered="#{findLocationsBeans.booltableMapFlag}" model="#{findLocationsBeans.mapModel}"/>
 
 				<b:column col-md="10">
 					<h:dataTable styleClass="table table-striped"
