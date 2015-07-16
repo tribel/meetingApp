@@ -9,7 +9,7 @@
 
 <h:head>
 	<b:navBar brand="Главная" brandHref="home.xhtml#" inverse="true"
-		fixed="top">
+		fixed="top" >
 		<b:navbarLinks>
 			<b:navLink value="О нас" href="about.xhtml#"></b:navLink>
 			<b:navLink value="Контакты" href="contacts.xhtml#"></b:navLink>
@@ -26,7 +26,7 @@
 #{findLocationsBeans.findFilteredLocation()}
 	<h:form styleClass="form-signin-find-location">
 
-		<b:container>
+		<b:container id="contId">
 
 			<b:column col-sm="3" col-md="2" styleClass="sidebar">
 				<b:listLinks>
@@ -44,25 +44,21 @@
 						showOn="button" />
 					<br />
 					<br />
-					<p:accordionPanel >
-						<p:tab title="Расширеный поиск">
-							
-						</p:tab>
-					</p:accordionPanel>
-							<br />
-							<br />
+					
 				</b:listLinks>
 
-				<p:commandButton value="Найти" ajax="true" update="@(form)"
+				<p:commandButton value="Найти" ajax="true" update="contId2"
 					id="ajaxcb" look="primary"
 					actionListener="#{findLocationsBeans.findFilteredLocation()}" />
 			</b:column>
+			</b:container>
+			<b:container id="contId2">
 			<b:column offset="2" styleClass="main">
 				<h1>Выберете компанию</h1>
 
 				<p:selectOneMenu value="#{findLocationsBeans.tableMapFlag}">
 					<p:ajax listener="#{findLocationsBeans.onTableMapChange}"
-						update="@(form)" />
+						update="contId2" />
 					<f:selectItem itemLabel="Показать в таблице" itemValue="1" />
 					<f:selectItem itemLabel="Показать на карте" itemValue="0" />
 				</p:selectOneMenu>
@@ -74,9 +70,9 @@
 			<b:column offset="2">
 
 
-				#{findLocationsBeans.findFilteredLocation()}
-				<p:gmap center="50.426718, 30.66419" zoom="15" type="hybrid"
-					style="width:600px;height:400px" id="dataView"
+			
+				<p:gmap center="50.426718, 30.66419" zoom="12" type="hybrid"
+					style="width:800px;height:600px" id="dataView"
 					rendered="#{findLocationsBeans.booltableMapFlag}" model="#{findLocationsBeans.mapModel}"/>
 
 				<b:column col-md="10">

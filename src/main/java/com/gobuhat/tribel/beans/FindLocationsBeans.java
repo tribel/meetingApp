@@ -129,6 +129,7 @@ public class FindLocationsBeans {
 	public void findFilteredLocation() {
 		if ( filterAddress.equals("") && filterDate == null) {
 			locList = locationsService.findAllLocations();
+			mapViewController();
 			return;
 		}
 		
@@ -153,11 +154,18 @@ public class FindLocationsBeans {
 				}
 			}
 		}
-		System.out.println("Model start");
+		
+		mapViewController();
+	}
+	
+	
+	public void mapViewController() {
+		mapModel = new DefaultMapModel();
+		
 		for (Locations l : locList) {
-			mapModel.addOverlay(new Marker(new LatLng(l.getLat(), l.getLng()), "Uchkuduk"));
-			System.out.println("lat" + l.getLat() + "Lng" + l.getLng());
+			mapModel.addOverlay(new Marker(new LatLng(l.getLat(), l.getLng()), "Uchkuduk"));			
 		}
+		
 	}
 	
 	public Collection<String> completeAddress(String query) {
