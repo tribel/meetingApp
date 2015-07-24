@@ -9,7 +9,7 @@
 
 <h:head>
 	<b:navBar brand="Главная" brandHref="home.xhtml#" inverse="true"
-		fixed="top" >
+		fixed="top">
 		<b:navbarLinks>
 			<b:navLink value="О нас" href="about.xhtml#"></b:navLink>
 			<b:navLink value="Контакты" href="contacts.xhtml#"></b:navLink>
@@ -32,8 +32,9 @@
 				<b:listLinks>
 					<b:navLink header="Фильтр" />
 					<p:outputLabel for="uAdd" value="Адресс:" />
-					<p:autoComplete id="uAdd" value="#{findLocationsBeans.filterAddress}"
-						label="Address" completeMethod="#{findLocationsBeans.completeAddress}">
+					<p:autoComplete id="uAdd"
+						value="#{findLocationsBeans.filterAddress}" label="Address"
+						completeMethod="#{findLocationsBeans.completeAddress}">
 					</p:autoComplete>
 
 					<br />
@@ -44,15 +45,15 @@
 						showOn="button" />
 					<br />
 					<br />
-					
+
 				</b:listLinks>
 
 				<p:commandButton value="Найти" ajax="true" update="contId2"
 					id="ajaxcb" look="primary"
 					actionListener="#{findLocationsBeans.findFilteredLocation()}" />
 			</b:column>
-			</b:container>
-			<b:container id="contId2">
+		</b:container>
+		<b:container id="contId2">
 			<b:column offset="2" styleClass="main">
 				<h1>Выберете компанию</h1>
 
@@ -70,10 +71,11 @@
 			<b:column offset="2">
 
 
-			
+
 				<p:gmap center="50.426718, 30.66419" zoom="12" type="hybrid"
 					style="width:800px;height:600px" id="dataView"
-					rendered="#{findLocationsBeans.booltableMapFlag}" model="#{findLocationsBeans.mapModel}"/>
+					rendered="#{findLocationsBeans.booltableMapFlag}"
+					model="#{findLocationsBeans.mapModel}" />
 
 				<b:column col-md="10">
 					<h:dataTable styleClass="table table-striped"
@@ -113,7 +115,9 @@
 							<f:facet name="header">
 								<h:outputText value="Пожелания" />
 							</f:facet>
+
 							<h:outputText value="#{item.wishes}" />
+
 						</h:column>
 						<h:column>
 							<f:facet name="header">

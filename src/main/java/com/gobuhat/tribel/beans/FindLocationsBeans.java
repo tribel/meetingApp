@@ -163,7 +163,7 @@ public class FindLocationsBeans {
 		mapModel = new DefaultMapModel();
 		
 		for (Locations l : locList) {
-			mapModel.addOverlay(new Marker(new LatLng(l.getLat(), l.getLng()), "Uchkuduk"));			
+			mapModel.addOverlay(new Marker(new LatLng(l.getLat(), l.getLng()), l.getUser().getName()));	
 		}
 		
 	}

@@ -8,15 +8,31 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
+
+	<h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+
+	<h:outputStylesheet name="css/cover.css" />
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+
+	<h:outputScript name="bootstrap/js/bootstrap.js" />
+
+
 	<style type="text/css">
 .form-signin {
-	margin: 0 auto;
-	max-width: 60%;
+	margin: 25 auto;
+	max-width: 100%;
 	padding: 12%;
+}
+
+body {
+	background-image: url(images/alexa.jpg) no-repeat center center fixed;
 }
 </style>
 
-	<b:navBar brand="Главная" brandHref="home.xhtml#" inverse="true" fixed="top" >
+	<b:navBar brand="Главная" brandHref="home.xhtml#" inverse="true"
+		fixed="top">
 		<b:navbarLinks>
 			<b:navLink value="О нас" href="about.xhtml#"></b:navLink>
 			<b:navLink value="Контакты" href="contacts.xhtml#"></b:navLink>
@@ -24,23 +40,32 @@
 		</b:navbarLinks>
 	</b:navBar>
 </h:head>
-<h:body >
+<h:body>
 
 
 
 	<h:form styleClass="form-signin ">
-		<b:container>
-			<b:row>
-				<b:button value="Отметить место" look="primary " outcome=""
-					size="lg" />
-			</b:row>
-			<b:row>
-				<b:button value="Найти место " look="warning " outcome="findLocation" size="lg" />
-			</b:row>
-			
-		</b:container>
+
+
+		<div class="inner cover">
+			<h1 class="cover-heading">Cover your page.</h1>
+			<p class="lead">Cover is a one-page template for building simple
+				and beautiful home pages. Download, edit the text, and add your own
+				fullscreen background photo to make it your own.</p>
+			<p class="lead">
+				<b:container>
+					<b:row>
+						<b:button value="Отметить место" look="primary "
+							outcome="createLocation" size="lg" />
+					</b:row>
+					<b:row>
+						<b:button value="Найти место " look="warning "
+							outcome="findLocation" size="lg" />
+					</b:row>
+
+				</b:container>
+			</p>
+		</div>
 	</h:form>
-
-
 </h:body>
 </html>
