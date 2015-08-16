@@ -36,7 +36,7 @@
 <h:body>
 
 
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+	<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:90%; margin:0 auto;">
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
 			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -64,7 +64,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="item">
+			<div class="item" >
 				<img class="second-slide"
 					src="resources/images/fors.gif" alt="Second slide" />
 				<div class="container">
@@ -108,5 +108,35 @@
 	</div>
 	<!-- /.carousel -->
 
+	<br />
+	<h:form>
+	<div style="width:90%; margin:0 auto;">
+		<hr />
+		
+		
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel  for="tel" value="Номер контактного телефона"/>
+				<br/>
+				<p:selectOneRadio id="tel" value="#{createLocationsBean.telephone}" >
+					<p:ajax update="inputTel" />
+					<f:selectItem itemLabel="Новый телефон" itemValue="notnulla"/>
+					<f:selectItem itemLabel="Из профиля" itemValue="null"/>
+				</p:selectOneRadio>
+				
+				<p:inputText id="inputTel" value="#{createLocationsBean.telephone}" 
+					rendered="#{createLocationsBean.telephone == null}"/>
+			</h:panelGrid>
+				
+			
+			<p:calendar id="start" value="#{createLocationsBean.startDate}" showOn="button"/>
+			<BR /><BR /><BR /><BR /><BR /><BR />	
+				
+</div>
+	
+	</h:form>
+	
 </h:body>
+
+
+
 </html>

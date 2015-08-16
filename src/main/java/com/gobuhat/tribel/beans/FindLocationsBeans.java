@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.model.map.*;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.Scope; 
 
 import com.gobuhat.tribel.entity.Locations;
 import com.gobuhat.tribel.service.LocationsService;
@@ -38,6 +38,7 @@ public class FindLocationsBeans {
 	private Date filterDate;
 	
 	private MapModel mapModel = new DefaultMapModel();
+	
 
 	public FindLocationsBeans() {
 		//locList = locationsService.findAllLocations();
