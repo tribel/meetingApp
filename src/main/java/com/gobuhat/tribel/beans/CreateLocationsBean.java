@@ -20,6 +20,8 @@ public class CreateLocationsBean {
 	private String telephone;
 	private Date startDate;
 	private Date endDate;
+	private String description;
+	private String wishes;
 	
 	public CreateLocationsBean() {
 	
@@ -56,11 +58,21 @@ public class CreateLocationsBean {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
-	public void onTelephoneChange() {
-		
+
+	public String getDescription() {
+		return description;
 	}
-		
-	
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getWishes() {
+		return wishes;
+	}
+
+	public void setWishes(String wishes) {
+		this.wishes = wishes;
+	}
 	
 }

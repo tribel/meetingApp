@@ -9,16 +9,15 @@
 
 <h:head>
 
-	
-		<h:outputStylesheet name="bootstrap/css/bootstrap.css" />
 
-		<h:outputStylesheet name="css/carousel.css" />
+	<h:outputStylesheet name="bootstrap/css/bootstrap.css" />
 
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+	<h:outputStylesheet name="css/carousel.css" />
 
-		<h:outputScript name="bootstrap/js/bootstrap.js" />
-	
+
+
+	<h:outputScript name="bootstrap/js/bootstrap.js" />
+
 
 
 	<b:navBar brand="Главная" brandHref="home.xhtml#" inverse="true"
@@ -36,7 +35,8 @@
 <h:body>
 
 
-	<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:90%; margin:0 auto;">
+	<div id="myCarousel" class="carousel slide" data-ride="carousel"
+		style="width: 90%; margin: 0 auto;">
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
 			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -45,8 +45,8 @@
 		</ol>
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
-				<img class="first-slide"
-					src="resources/images/boat2.gif" alt="First slide" />
+				<img class="first-slide" src="resources/images/boat2.gif"
+					alt="First slide" />
 				<div class="container">
 					<div class="carousel-caption">
 						<h1>Example headline.</h1>
@@ -64,9 +64,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="item" >
-				<img class="second-slide"
-					src="resources/images/fors.gif" alt="Second slide" />
+			<div class="item">
+				<img class="second-slide" src="resources/images/fors.gif"
+					alt="Second slide" />
 				<div class="container">
 					<div class="carousel-caption">
 						<h1>Another example headline.</h1>
@@ -81,8 +81,8 @@
 				</div>
 			</div>
 			<div class="item">
-				<img class="third-slide"
-					src="resources/images/boat1.gif" alt="Third slide" />
+				<img class="third-slide" src="resources/images/boat1.gif"
+					alt="Third slide" />
 				<div class="container">
 					<div class="carousel-caption">
 						<h1>One more for good measure.</h1>
@@ -110,31 +110,58 @@
 
 	<br />
 	<h:form>
-	<div style="width:90%; margin:0 auto;">
-		<hr />
-		
-		
-			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel  for="tel" value="Номер контактного телефона"/>
-				<br/>
-				<p:selectOneRadio id="tel" value="#{createLocationsBean.telephone}" >
-					<p:ajax update="inputTel" />
-					<f:selectItem itemLabel="Новый телефон" itemValue="notnulla"/>
-					<f:selectItem itemLabel="Из профиля" itemValue="null"/>
-				</p:selectOneRadio>
+		<div style="width: 90%; margin: 0 auto;">
+			<hr />
+
+			<h:panelGrid columns="1" cellpadding="5">
+				<h:panelGrid columns="1" cellpadding="5">
+					<p:outputLabel value="Номер контактного телефона" />
+
+					<p:commandButton value="Новый номер" update="display"
+						oncomplete="PF('dlg').show()" icon="fa-phone" />
+					<p:dialog header="Введите новый номер" modal="true"
+						showEffect="bounce" widgetVar="dlg" resizable="false">
+						<p:panelGrid columns="2" id="display">
+							<p:inputText id="inputTel"
+								value="#{createLocationsBean.telephone}" />
+							<p:commandButton value="Добавить" oncomplete="PF('dlg').hide();" />
+						</p:panelGrid>
+					</p:dialog>
+
+				</h:panelGrid>
+				<br />
+
+				<p:outputLabel value="Определите начало события" />
+				<p:calendar id="start" value="#{createLocationsBean.startDate}"
+					pattern="MM/dd/yyyy HH:mm" />
+
+				<BR />
+
+				<p:outputLabel value="Определите предпологаемый конец" />
+				<p:calendar id="end" value="#{createLocationsBean.endDate}"
+					pattern="MM/dd/yyyy HH:mm" />
+
+				<p:outputLabel value="Что будет" />
+				<p:selectOneMenu  value="#{createLocationsBean.description}"
+					style="width:160px">
+					<f:selectItem itemLabel="Вписон" itemValue="vpiska" />
+					<f:selectItem itemLabel="Хард бухач" itemValue="buhash" />
+					<f:selectItem itemLabel="Пикник" itemValue="piknik" />
+					<f:selectItem itemLabel="Дегь рождение" itemValue="birthday" />
+				</p:selectOneMenu>
 				
-				<p:inputText id="inputTel" value="#{createLocationsBean.telephone}" 
-					rendered="#{createLocationsBean.telephone == null}"/>
-			</h:panelGrid>
+				<p:outputLabel value="Ваши пожелания" />
+				<p:inputTextarea value="#{createLocationsBean.wishes}" style="width:200px;"/>
+			
 				
 			
-			<p:calendar id="start" value="#{createLocationsBean.startDate}" showOn="button"/>
-			<BR /><BR /><BR /><BR /><BR /><BR />	
-				
-</div>
-	
+			</h:panelGrid>
+			<BR /> <BR /> <BR /> <BR /> <BR /> <BR />
+
+		</div>
+
 	</h:form>
-	
+
 </h:body>
 
 
