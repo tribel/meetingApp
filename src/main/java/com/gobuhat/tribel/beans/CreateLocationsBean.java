@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
+import com.gobuhat.tribel.entity.Users;
 import com.gobuhat.tribel.service.LocationsService;
 
 
@@ -16,12 +17,15 @@ public class CreateLocationsBean {
 
 	@Inject
 	private LocationsService locationsService;
-
+	
 	private String telephone;
 	private Date startDate;
 	private Date endDate;
 	private String description;
 	private String wishes;
+	private String address;
+	private double lat;
+	private double lng;
 	
 	public CreateLocationsBean() {
 	
@@ -74,5 +78,38 @@ public class CreateLocationsBean {
 	public void setWishes(String wishes) {
 		this.wishes = wishes;
 	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
 	
+	public void saveLocation() {
+		
+	}
+	
+	public void saveLocationNonAutorized() {
+		Users nonAutUser = new Users();
+		nonAutUser.setName("");
+	}
+
 }

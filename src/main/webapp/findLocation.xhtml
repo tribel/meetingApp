@@ -34,7 +34,7 @@
 					<p:outputLabel for="uAdd" value="Адресс:" />
 					<p:autoComplete id="uAdd"
 						value="#{findLocationsBeans.filterAddress}" label="Address"
-						completeMethod="#{findLocationsBeans.completeAddress}">
+						completeMethod="#{findLocationsBeans.completeAddress}" >
 					</p:autoComplete>
 
 					<br />
@@ -55,12 +55,12 @@
 		</b:container>
 		<b:container id="contId2">
 			<b:column offset="2" styleClass="main">
-				<h1>Выберете компанию</h1>
+				<h1>Выберите компанию</h1>
 
 				<p:selectOneMenu value="#{findLocationsBeans.tableMapFlag}">
 					<p:ajax listener="#{findLocationsBeans.onTableMapChange}"
 						update="contId2" />
-					<f:selectItem itemLabel="Показать в таблице" itemValue="1" />
+					<f:selectItem itemLabel="Показать в списке" itemValue="1" />
 					<f:selectItem itemLabel="Показать на карте" itemValue="0" />
 				</p:selectOneMenu>
 

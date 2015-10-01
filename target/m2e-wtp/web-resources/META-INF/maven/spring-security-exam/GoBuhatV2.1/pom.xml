@@ -3,7 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.springframework.samples.spring</groupId>	
+
+	<groupId>spring-security-exam</groupId>
 	<artifactId>GoBuhatV2.1</artifactId>
 	<version>1.0.0.CI-SNAPSHOT</version>
 	<packaging>war</packaging>
@@ -18,7 +19,6 @@
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<spring.framework.version>4.1.1.RELEASE</spring.framework.version>
 		<jsf.version>2.1.13</jsf.version>
-		<spring.security.version>3.2.3.RELEASE</spring.security.version>
 	</properties>
 	
 	
@@ -152,18 +152,29 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${spring.security.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>${spring.security.version}</version>
-		</dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
 		
-	
 	</dependencies>
 
 	<build>

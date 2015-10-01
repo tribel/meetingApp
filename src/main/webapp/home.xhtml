@@ -26,6 +26,11 @@
 	padding: 12%;
 }
 
+.form-login {
+	margin: 60 auto;
+	max-width: 50%;
+}
+
 body {
 	background-image: url(images/alexa.jpg) no-repeat center center fixed;
 }
@@ -36,8 +41,21 @@ body {
 		<b:navbarLinks>
 			<b:navLink value="О нас" href="about.xhtml#"></b:navLink>
 			<b:navLink value="Контакты" href="contacts.xhtml#"></b:navLink>
-			<b:navLink value="Link" href="#"></b:navLink>
 		</b:navbarLinks>
+
+		<h:form styleClass="navbar-form navbar-right" >
+			<div class="form-group">
+				<b:inputText placeholder="Email" fieldSize="sm" value=""/>
+				<!--input type="text" class="form-control" placeholder="Search"/-->
+			</div>
+			<div class="form-group">
+				<b:inputText placeholder="Password" fieldSize="sm" value=""/>
+			</div> 
+                #{' '}
+                <b:commandButton action="a" value="Sign in"
+				look="success" icon="chevron-right" iconAlign="right" />
+		</h:form>
+
 	</b:navBar>
 </h:head>
 <h:body>
@@ -49,16 +67,14 @@ body {
 
 		<div class="inner cover">
 			<h1 class="cover-heading">Найди праздник своей мечты.</h1>
-			<p class="lead">Cover is a one-page template for building simple
-				and beautiful home pages. Download, edit the text, and add your own
-				fullscreen background photo to make it your own.</p>
+			<p class="lead">Borcuhi.</p>
 			<p class="lead">
 				<b:container style="width:100%; ">
 					<b:row>
 						<b:button value="Отметить место" look="primary "
 							outcome="createLocation" size="lg" />
 					</b:row>
-					<br/>
+					<br />
 					<b:row>
 						<b:button value="Найти место " look="warning "
 							outcome="findLocation" size="lg" />

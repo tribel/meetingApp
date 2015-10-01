@@ -153,8 +153,15 @@
 				<p:outputLabel value="Ваши пожелания" />
 				<p:inputTextarea value="#{createLocationsBean.wishes}" style="width:200px;"/>
 			
+				<p:outputLabel value="Адресс"/>
+				<p:inputText value="#{createLocationsBean.address}"/>
 				
-			
+				<p:commandButton value="Сохранить" actionListener="#{createLocationsBean.saveLocation()}"
+				action="afterSave">
+				</p:commandButton>
+				
+				
+						
 			</h:panelGrid>
 			<BR /> <BR /> <BR /> <BR /> <BR /> <BR />
 
