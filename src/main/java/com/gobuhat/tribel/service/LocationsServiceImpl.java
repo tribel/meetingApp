@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gobuhat.tribel.dao.LocationsDao;
@@ -61,7 +62,7 @@ public class LocationsServiceImpl implements LocationsService{
 	public void editLocation(Locations loc) {
 		locationsDao.editLocation(loc);
 	}
-
+	
 	@Override
 	public List<Locations> findByAddress(String address, String num) {
 		return locationsDao.findByAddress(address, num);

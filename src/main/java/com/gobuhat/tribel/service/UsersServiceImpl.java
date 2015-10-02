@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +39,7 @@ public class UsersServiceImpl implements UsersService{
 	public void edit(Users user) {
 		usersDao.edit(user);
 	}
-
+	
 	@Override
 	public Users findById(int id) {
 		return usersDao.findById(id);
