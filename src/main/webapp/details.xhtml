@@ -8,14 +8,78 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
+	<script src="http://maps.google.com/maps/api/js?sensor=true"
+		type="text/javascript"></script>
 </h:head>
 
 <h:body>
-	<h:form>
-	
-	<p:calendar id="start" value="#{createLocationsBean.startDate}" pattern="hh:MM:yyyy"/>
-	
-	</h:form>
+<script>
+	var map;
+var geocoder;
+function initialize() {
+    // Specifies the google Map properties
+    map = new google.maps.Map(document.getElementById('map-canvas'), {
+        zoom : 4,
+        center : new google.maps.LatLng(37.5499, -95.5524),
+        mapTypeId : google.maps.MapTypeId.ROADMAP,
+        mapTypeControl : false
+    });
+    // Allowing to change the Address to GeoCode.
+    geocoder = new google.maps.Geocoder({});
+    var options = {
+        types : [ 'geocode' ],
+        componentRestrictions : {
+            country : "us"
+        }
+    };
+    var input = (document.getElementById('address'));
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    autocomplete.bindTo('bounds', map);
+}
+// codeAddress()
+function codeAddress() {
+    var address = document.getElementById("address").value;
+    geocoder.geocode({
+        'address' : address
+    }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            document.getElementById("lat").value = results[0].geometry.location
+                    .lat();
+            document.getElementById("lng").value = results[0].geometry.location
+                    .lng();
+        }
+    });
+}
+</script>
+
+    <div id="content-01">
+        <h:form prependId="false">
+            <div id="panel-Three">
+                <h:outputLabel value="ENTER ADDRESS"
+                    style="font-size:12px;vertical-align: bottom;" />
+                <h:inputText style="margin-left: 2px" type="text" id="address" size="40"
+                    onblur="codeAddress()" />
+                <h:outputLabel value="LATTITUDE : "
+                    style="font-size:12px;vertical-align: bottom;" />
+                <h:inputText id="lat"
+                    style="margin-left: 2px" />
+                <h:outputLabel value="LONGTITUDE : "
+                    style="font-size:12px;vertical-align: bottom;" />
+                <h:inputText id="lng" 
+                    style="margin-left: 2px" />
+                <br />
+                <h:commandButton type="submit" value="Submit Value">
+                    <f:ajax  event="click"
+                        render="@form" execute="@form"></f:ajax>
+                </h:commandButton>
+                <h:panelGroup id="checkStatus">
+                    <h:outputLabel id="responseCheck"
+                     
+                        style="vertical-align: bottom;" />
+                </h:panelGroup>
+            </div>
+        </h:form>
+    </div>
 
 </h:body>
 </html>

@@ -179,7 +179,7 @@ public class FindLocationsBeans {
 		List<String> results = new ArrayList<>();
 		List<Locations> list = locationsService.findAllLocations();
 		for( int i = 0; i < list.size(); i++ ) {
-			if (list.get(i).getAddress().startsWith(query)) {
+			if (list.get(i).getAddress().toLowerCase().startsWith(query.toLowerCase())) {
 				results.add(list.get(i).getAddress());
 			}	
 		}

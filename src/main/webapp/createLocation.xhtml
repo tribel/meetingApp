@@ -49,18 +49,16 @@
 		</ol>
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
-				<img class="first-slide" src="resources/images/boat2.gif"
+				<img class="first-slide" src="resources/images/borcu.jpg"
 					alt="First slide" />
 				<div class="container">
 					<div class="carousel-caption">
 						<h1>Example headline.</h1>
-						<p>
+						
 							Note: If you're viewing this page via a
-							<code>file://</code>
-							URL, the "next" and "previous" Glyphicon buttons on the left and
-							right might not load/display properly due to web browser security
-							rules.
-						</p>
+							Glyphicon
+							
+						
 						<p>
 							<a class="btn btn-lg btn-primary" href="#" role="button">Sign
 								up today</a>
@@ -116,15 +114,10 @@
 	<hr />
 	<script type="text/javascript">
 		function geocode() {
-			PF('geoMap').geocode(document.getElementById('address').value);
+			PF('geoMap').geocode(document.getElementById('address_input').value);
+			
 		}
 
-		function reverseGeocode() {
-			var lat = document.getElementById('lat').value, lng = document
-					.getElementById('lng').value;
-
-			PF('revGeoMap').reverseGeocode(lat, lng);
-		}
 	</script>
 	<h:form prependId="false">
 
@@ -176,11 +169,19 @@
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Ваши пожелания" />
-				<p:inputTextarea value="#{createLocationsBean.wishes}" style="width:200px;"/>
+				<p:inputTextarea value="#{createLocationsBean.wishes}" style="width:400px;"/>
 
 				<p:outputLabel value="Адресс" />
-				<p:inputText id="address" value="#{createLocationsBean.address}" />
-				<p:commandButton value="Geocode" icon="ui-icon-search" onclick="geocode()" type="button" />
+				
+					
+				
+				   <p:autoComplete id="address" maxResults="6"
+						value="#{createLocationsBean.address}"
+						completeMethod="#{createLocationsBean.completeAddress}" 
+						onkeydown="geocode()" >
+					</p:autoComplete>
+					
+					<p:commandButton value="Geocode" icon="ui-icon-search" onclick="geocode()" type="button" />
 				
 				<p:gmap id="geoGmap" widgetVar="geoMap"
 					center="#{createLocationsBean.centerGeoMap}" zoom="6" type="hybrid"

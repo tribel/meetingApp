@@ -1,10 +1,13 @@
 package com.gobuhat.tribel.beans;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -22,7 +25,7 @@ import com.gobuhat.tribel.service.LocationsService;
 
 
 @Named
-@Scope("request")
+@ViewScoped
 public class CreateLocationsBean {
 
 	@Inject
@@ -32,12 +35,14 @@ public class CreateLocationsBean {
 	private String centerGeoMap = "41.850033, -87.6500523";
 	private Users nonAutorizedUser = new Users();
 	private MapModel geoModel = new DefaultMapModel();
+	private Locations creatingLocation;
+	private List<String> geoAddressList = new ArrayList<>();
 	
 	private Date startDate;
 	private Date endDate;
 	private String description;
 	private String wishes;
-	private String address;
+	private String address = new String();
 	private double lat;
 	private double lng;
 	
@@ -137,51 +142,52 @@ public class CreateLocationsBean {
 		this.geoModel = geoModel;
 	}
 
-	private Locations saveLocation() {
-		Locations location = new Locations();
-		location.setPublishTime(new Timestamp(new Date().getTime()));
-		location.setStartTime(new Timestamp(startDate.getTime()));
-		location.setEndTime(new Timestamp(endDate.getTime()));
-		location.setDescription(description);
-		location.setWishes(wishes);
-		location.setLat(lat);
-		location.setLng(lng);
-		location.setAddress(address);
-		location.setActive((byte)1);
+	private Locations sameSaveLocation() {
+		creatingLocation.setPublishTime(new Timestamp(new Date().getTime()));
+		creatingLocation.setStartTime(new Timestamp(startDate.getTime()));
+		creatingLocation.setEndTime(new Timestamp(endDate.getTime()));
+		creatingLocation.setDescription(description);
+		creatingLocation.setWishes(wishes);
+		creatingLocation.setAddress(address);
+		creatingLocation.setLat(lat);
+		creatingLocation.setLng(lng);
+		creatingLocation.setActive((byte)1);
 		
-		return location;
+		return creatingLocation;
 	}
 	
 	public void saveLocation(String login, String password) {
 		Users tmpUser = new Users(login, password);
-		locationsService.addLocation( saveLocation() , tmpUser);
+		locationsService.addLocation( sameSaveLocation() , tmpUser);
 	}
 	
 	public void saveLocationNonAutorized() {
-		locationsService.addLocationByNonAutorize( saveLocation() , nonAutorizedUser);
+		locationsService.addLocationByNonAutorize( sameSaveLocation() , nonAutorizedUser);
 	}
 	
 	public void onGeocode(GeocodeEvent event) {
 		 List<GeocodeResult> results = event.getResults();
+		 
 	        if (results != null && !results.isEmpty()) {
+	        	System.out.println("VICkochu");
 	            LatLng center = results.get(0).getLatLng();
 	            centerGeoMap = center.getLat() + "," + center.getLng();
-
+	            geoAddressList = new ArrayList<>();
+	            
 	            for (GeocodeResult r: results) {
 	                geoModel.addOverlay(new Marker(r.getLatLng(), r.getAddress()));
-	              
-	                LatLng tmpLL = r.getLatLng();
-	                lat = tmpLL.getLat();
-	                lng= tmpLL.getLng();
-	                this.setLat(tmpLL.getLat());
-	                this.setLng(tmpLL.getLng());
-	                System.out.println("Obschiu " + r.getLatLng());
-	                System.out.println("geter " + tmpLL.getLat());
-	                System.out.println("seterLng  " + tmpLL.getLng());
-	                System.out.println("same" + lat + "   " + lng);
+	                geoAddressList.add(r.getAddress());
 	            }
 	        }
 	        
+	        System.out.println("Posmotri = " + geoAddressList);
+	}
+	
+	public Collection<String> completeAddress(String query) {
+		System.out.println("Значчение адреса -- "  + address);
+		System.out.println("-------" + geoAddressList + "--------");
+		//address = "киев вереснева";
+		return geoAddressList;
 	}
 
 }
