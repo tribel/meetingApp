@@ -23,7 +23,7 @@
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
-#{findLocationsBeans.findFilteredLocation()}
+	#{findLocationsBeans.findFilteredLocation()}
 	<h:form styleClass="form-signin-find-location">
 
 		<b:container id="contId">
@@ -77,6 +77,7 @@
 					rendered="#{findLocationsBeans.booltableMapFlag}"
 					model="#{findLocationsBeans.mapModel}" />
 
+				
 				<b:column col-md="10">
 					<h:dataTable styleClass="table table-striped"
 						value="#{findLocationsBeans.locList}" var="item"

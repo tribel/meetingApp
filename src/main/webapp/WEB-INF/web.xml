@@ -15,19 +15,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring/application-config.xml
-        			 classpath:WEB-INF/application-config.xml	
         </param-value>
     </context-param>
-    
-     <!-- Spring Security Facelets Tag Library -->
-    <context-param>
-        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
-        <param-value>/WEB-INF/springsecurity.taglib.xml</param-value>
-    </context-param>
-    
-	<welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
-    </welcome-file-list>
     
     
     <!-- Spring listeners -->
@@ -42,16 +31,7 @@
         	org.springframework.web.context.request.RequestContextListener
         </listener-class>
     </listener>
-    
-     <!-- Spring Security -->
-    <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+
     
     <!-- Start JSF -->
     <servlet>

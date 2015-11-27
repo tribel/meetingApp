@@ -5,7 +5,7 @@
 	<description>
 		Example configuration to get you started.
 	</description>
-	<context:component-scan base-package="com.meetapp.tribel" />
+	<context:component-scan base-package="com.gobuhat.tribel.*" />
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -15,7 +15,7 @@
 	</bean>
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="packagesToScan" value="com.meetapp.tribel" />
+		<property name="packagesToScan" value="com.gobuhat.tribel.*" />
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceUnitName" value="CashM" />
 		<property name="jpaDialect">

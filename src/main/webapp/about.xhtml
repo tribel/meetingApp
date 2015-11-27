@@ -1,11 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Insert title here</title>
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
 
-</body>
+<h:head>
+
+
+	<style type="text/css">
+.form-signin {
+	margin: 25 auto;
+	max-width: 100%;
+	padding: 12%;
+}
+</style>
+
+	<h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+
+	<b:navBar brand="Главная" brandHref="home.xhtml#" inverse="true"
+		fixed="top">
+		<b:navbarLinks>
+			<b:navLink value="О нас" href="about.xhtml#"></b:navLink>
+			<b:navLink value="Контакты" href="contacts.xhtml#"></b:navLink>
+		</b:navbarLinks>
+
+		<h:form styleClass="navbar-form navbar-right">
+			<div class="form-group">
+				<b:inputText placeholder="login" fieldSize="sm" value="" />
+				<!--input type="text" class="form-control" placeholder="Search"/-->
+			</div>
+			<div class="form-group">
+				<b:inputText placeholder="Password" fieldSize="sm" value="" />
+			</div> 
+                #{' '}
+                <b:commandButton action="a" value="Sign in"
+				look="success" icon="chevron-right" iconAlign="right" />
+		</h:form>
+
+	</b:navBar>
+
+
+</h:head>
+<h:body>
+	<h:form styleClass="form-signin">
+
+		<h1>Tribel computers presents</h1>
+		<h4>gavno zhopa</h4>
+		
+	</h:form>
+</h:body>
 </html>

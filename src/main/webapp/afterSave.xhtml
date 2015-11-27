@@ -6,15 +6,44 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:b="http://bootsfaces.net/ui">
-	
+
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Insert title here</title>
+	<style type="text/css">
+.form-signin {
+	margin: 25 auto;
+	max-width: 100%;
+	padding: 12%;
+}
+</style>
+
+	<b:navBar brand="Главная" brandHref="home.xhtml#" inverse="true"
+		fixed="top">
+		<b:navbarLinks>
+			<b:navLink value="О нас" href="about.xhtml#"></b:navLink>
+			<b:navLink value="Контакты" href="contacts.xhtml#"></b:navLink>
+		</b:navbarLinks>
+
+		<h:form styleClass="navbar-form navbar-right">
+			<div class="form-group">
+				<b:inputText placeholder="login" fieldSize="sm" value="" />
+				<!--input type="text" class="form-control" placeholder="Search"/-->
+			</div>
+			<div class="form-group">
+				<b:inputText placeholder="Password" fieldSize="sm" value="" />
+			</div> 
+                #{' '}
+                <b:commandButton action="a" value="Sign in"
+				look="success" icon="chevron-right" iconAlign="right" />
+		</h:form>
+
+	</b:navBar>
+
 </h:head>
 <h:body>
 	
-		HEllo
-	
-	<p:commandLink value="dfdf"> </p:commandLink>	
+	<p:commandLink value="dfdf">
+	</p:commandLink>
 </h:body>
 </html>
