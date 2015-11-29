@@ -178,10 +178,21 @@ public class FindLocationsBeans {
 	public Collection<String> completeAddress(String query) {
 		List<String> results = new ArrayList<>();
 		List<Locations> list = locationsService.findAllLocations();
+		
+		/*
+		 *  fix this loop !!!!!
+		 */
+		
 		for( int i = 0; i < list.size(); i++ ) {
-			if (list.get(i).getAddress().toLowerCase().startsWith(query.toLowerCase())) {
+			if (list.get(i).getAddress().toLowerCase().startsWith(query.toLowerCase()) ) {
 				results.add(list.get(i).getAddress());
-			}	
+			}
+			String [] sArray = list.get(i).getAddress().toLowerCase().split(" ");
+			if( sArray.length >= 2) {
+				if( sArray[1].startsWith(query.toLowerCase())) {
+					results.add(list.get(i).getAddress());
+				}
+			}
 		}
 		Set<String> set = new HashSet<String>(results);
 		results.clear();

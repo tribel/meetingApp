@@ -144,13 +144,16 @@ public class CreateLocationsBean {
 
 	private Locations sameSaveLocation() {
 		int coordIndex = geoAddressList.indexOf(address);
+	
+		
 		
 		creatingLocation.setPublishTime(new Timestamp(new Date().getTime()));
 		creatingLocation.setStartTime(new Timestamp(startDate.getTime()));
 		creatingLocation.setEndTime(new Timestamp(endDate.getTime()));
 		creatingLocation.setDescription(description);
 		creatingLocation.setWishes(wishes);
-		creatingLocation.setAddress(address.substring(0, 20));
+		creatingLocation.setAddress(address.split(",")[0]);
+		creatingLocation.setAddNumber(address.split(",")[1]);
 		creatingLocation.setLat(geoResultList.get(coordIndex).getLatLng().getLat());
 		creatingLocation.setLng(geoResultList.get(coordIndex).getLatLng().getLng());
 		creatingLocation.setActive((byte)1);
@@ -177,7 +180,8 @@ public class CreateLocationsBean {
 	            geoResultList.clear();
 	            
 	            for (GeocodeResult r: results) {
-	            	geoModel.addOverlay(new Marker(r.getLatLng(), r.getAddress()));
+	            	if ( !this.address.equals("") && this.address != null )
+	            		geoModel.addOverlay(new Marker(r.getLatLng(), r.getAddress()));
 	                
 	            	geoAddressList.add(r.getAddress());
 	                geoResultList.add(r);
@@ -188,5 +192,5 @@ public class CreateLocationsBean {
 	public Collection<String> completeAddress(String query) {
 		return geoAddressList;
 	}
-
+	
 }
