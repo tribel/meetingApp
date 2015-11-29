@@ -8,7 +8,12 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-
+	<style type="text/css">
+		.ui-icon {
+			text-indent: 0;
+		} 
+	</style>
+	
 	<script src="http://maps.google.com/maps/api/js?sensor=true"
 		type="text/javascript"></script>
 
@@ -133,15 +138,23 @@
 					
 					<p:outputLabel value="Ваше имя"/>
 					<p:inputText value="#{createLocationsBean.nonAutorizedUser.name}"/>
+					<br />
 					
-					<p:outputLabel value="Номер контактного телефона" />
-					<p:commandButton value="Добавить" update="display"
-						oncomplete="PF('dlg').show()" icon="fa-phone" />
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Номер контактного телефона" />
+						<i class="fa fa-phone-square"></i>
+					</h:panelGrid>
+					
+					<p:commandButton   value="Добавить" update="display"
+						oncomplete="PF('dlg').show()" />
+					
+						
 					<p:dialog header="Введите номер" modal="true"
 						showEffect="bounce" widgetVar="dlg" resizable="false">
 						<p:panelGrid columns="2" id="display">
-							<p:inputText id="inputTel"
-								value="#{createLocationsBean.nonAutorizedUser.telephone}" />
+							<p:inputMask id="inputTel"
+								value="#{createLocationsBean.nonAutorizedUser.telephone}" 
+								 mask="(999) 999-9999"/>
 							<p:commandButton value="Добавить" oncomplete="PF('dlg').hide();" />
 						</p:panelGrid>
 					</p:dialog>
@@ -159,6 +172,7 @@
 				<p:calendar id="end" value="#{createLocationsBean.endDate}"
 					pattern="MM/dd/yyyy HH:mm" />
 
+				<br />
 				<p:outputLabel value="Что будет" />
 				<p:selectOneMenu  value="#{createLocationsBean.description}"
 					style="width:160px">
@@ -172,24 +186,33 @@
 				<p:inputTextarea value="#{createLocationsBean.wishes}" style="width:400px;"/>
 
 				<p:outputLabel value="Адресс" />
-				
-					
-				
-				   <p:autoComplete id="address" maxResults="6"
+
+				<h:panelGrid columns="2">
+					<p:autoComplete id="address" maxResults="6"
 						value="#{createLocationsBean.address}"
-						completeMethod="#{createLocationsBean.completeAddress}" 
-						onkeydown="geocode()" >
+						completeMethod="#{createLocationsBean.completeAddress}"
+						onkeydown="geocode()" style="width: 40%">
 					</p:autoComplete>
-					
-					<p:commandButton value="Geocode" icon="ui-icon-search" onclick="geocode()" type="button" />
-				
-				<p:gmap id="geoGmap" widgetVar="geoMap"
-					center="#{createLocationsBean.centerGeoMap}" zoom="6" type="hybrid"
-					model="#{createLocationsBean.geoModel}" style="width:100%;height:400px">
-					<p:ajax event="geocode" listener="#{createLocationsBean.onGeocode}"
-						update="@this" />
-				</p:gmap>
-				<p:commandButton value="Сохранить" actionListener="#{createLocationsBean.saveLocation(
+
+
+					<p:commandButton id="btn" type="button"  icon="ui-icon fa fa-eye" title="показать на карте"
+						onclick="PF('geoMapShow').show();" >
+					</p:commandButton>
+
+					<p:dialog id="gmapDialog" widgetVar="geoMapShow" width="625"
+						height="400" modal="true">
+						<p:gmap id="geoGmap" widgetVar="geoMap"
+							center="#{createLocationsBean.centerGeoMap}" zoom="6"
+							type="hybrid" model="#{createLocationsBean.geoModel}"
+							style="width:100%;height:400px">
+							<p:ajax event="geocode"
+								listener="#{createLocationsBean.onGeocode}" update="@this" />
+						</p:gmap>
+					</p:dialog>
+				</h:panelGrid>
+
+				<br />	
+					<p:commandButton value="Сохранить" actionListener="#{createLocationsBean.saveLocation(
 										userInformation.login, userInformation.password)}"
 										
 										

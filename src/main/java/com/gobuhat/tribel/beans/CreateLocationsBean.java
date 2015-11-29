@@ -17,7 +17,6 @@ import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
-import org.springframework.context.annotation.Scope;
 
 import com.gobuhat.tribel.entity.Locations;
 import com.gobuhat.tribel.entity.Users;
@@ -35,8 +34,9 @@ public class CreateLocationsBean {
 	private String centerGeoMap = "41.850033, -87.6500523";
 	private Users nonAutorizedUser = new Users();
 	private MapModel geoModel = new DefaultMapModel();
-	private Locations creatingLocation;
+	private Locations creatingLocation = new Locations();
 	private List<String> geoAddressList = new ArrayList<>();
+	private List<GeocodeResult> geoResultList = new ArrayList<>();
 	
 	private Date startDate;
 	private Date endDate;
@@ -143,14 +143,16 @@ public class CreateLocationsBean {
 	}
 
 	private Locations sameSaveLocation() {
+		int coordIndex = geoAddressList.indexOf(address);
+		
 		creatingLocation.setPublishTime(new Timestamp(new Date().getTime()));
 		creatingLocation.setStartTime(new Timestamp(startDate.getTime()));
 		creatingLocation.setEndTime(new Timestamp(endDate.getTime()));
 		creatingLocation.setDescription(description);
 		creatingLocation.setWishes(wishes);
-		creatingLocation.setAddress(address);
-		creatingLocation.setLat(lat);
-		creatingLocation.setLng(lng);
+		creatingLocation.setAddress(address.substring(0, 20));
+		creatingLocation.setLat(geoResultList.get(coordIndex).getLatLng().getLat());
+		creatingLocation.setLng(geoResultList.get(coordIndex).getLatLng().getLng());
 		creatingLocation.setActive((byte)1);
 		
 		return creatingLocation;
@@ -169,24 +171,21 @@ public class CreateLocationsBean {
 		 List<GeocodeResult> results = event.getResults();
 		 
 	        if (results != null && !results.isEmpty()) {
-	        	System.out.println("VICkochu");
 	            LatLng center = results.get(0).getLatLng();
 	            centerGeoMap = center.getLat() + "," + center.getLng();
-	            geoAddressList = new ArrayList<>();
+	            geoAddressList.clear();
+	            geoResultList.clear();
 	            
 	            for (GeocodeResult r: results) {
-	                geoModel.addOverlay(new Marker(r.getLatLng(), r.getAddress()));
-	                geoAddressList.add(r.getAddress());
+	            	geoModel.addOverlay(new Marker(r.getLatLng(), r.getAddress()));
+	                
+	            	geoAddressList.add(r.getAddress());
+	                geoResultList.add(r);
 	            }
-	        }
-	        
-	        System.out.println("Posmotri = " + geoAddressList);
+	        }        
 	}
 	
 	public Collection<String> completeAddress(String query) {
-		System.out.println("Значчение адреса -- "  + address);
-		System.out.println("-------" + geoAddressList + "--------");
-		//address = "киев вереснева";
 		return geoAddressList;
 	}
 
