@@ -195,8 +195,9 @@
 					</p:autoComplete>
 
 
-					<p:commandButton id="btn" type="button"  icon="ui-icon fa fa-eye" title="показать на карте"
-						onclick="PF('geoMapShow').show();" >
+					<p:commandButton id="btn" icon="ui-icon fa fa-eye" title="показать на карте"
+						actionListener="#{createLocationsBean.addAddressMarkerOnMap}" onclick="PF('geoMapShow').show();" 
+						update="geoGmap">
 					</p:commandButton>
 
 					<p:dialog id="gmapDialog" widgetVar="geoMapShow" width="625"

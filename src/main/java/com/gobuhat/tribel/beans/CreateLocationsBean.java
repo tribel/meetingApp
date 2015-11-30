@@ -180,9 +180,6 @@ public class CreateLocationsBean {
 	            geoResultList.clear();
 	            
 	            for (GeocodeResult r: results) {
-	            	if ( !this.address.equals("") && this.address != null )
-	            		geoModel.addOverlay(new Marker(r.getLatLng(), r.getAddress()));
-	                
 	            	geoAddressList.add(r.getAddress());
 	                geoResultList.add(r);
 	            }
@@ -191,6 +188,14 @@ public class CreateLocationsBean {
 	
 	public Collection<String> completeAddress(String query) {
 		return geoAddressList;
+	}
+	
+	public void addAddressMarkerOnMap() {
+		
+		if ( !this.address.equals("") ) {
+			int ind = geoAddressList.indexOf(this.address);
+			geoModel.addOverlay(new Marker(geoResultList.get(ind).getLatLng(), this.address));
+		}
 	}
 	
 }
