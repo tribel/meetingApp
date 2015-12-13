@@ -88,14 +88,12 @@
 				</div>
 			</div>
 			<div class="item">
-				<img class="third-slide" src="resources/images/boat1.gif"
+				<img class="third-slide" src="resources/images/serbenko.jpg"
 					alt="Third slide" />
 				<div class="container">
 					<div class="carousel-caption">
-						<h1>One more for good measure.</h1>
-						<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-							quam. Donec id elit non mi porta gravida at eget metus. Nullam id
-							dolor id nibh ultricies vehicula ut id elit.</p>
+						<h1></h1>
+						<p>Ты не понял</p>
 						<p>
 							<a class="btn btn-lg btn-primary" href="#" role="button">Browse
 								gallery</a>
@@ -122,6 +120,31 @@
 			PF('geoMap').geocode(document.getElementById('address_input').value);
 			
 		}
+		
+		function findMe() {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    var map = PF('geoLoc').getMap(),
+                    latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                    document.getElementById('lat').value = position.coords.latitude;
+                    document.getElementById('lng').value = position.coords.longitude;
+                    
+                    map.setCenter(latlng);
+
+                    var marker = new google.maps.Marker({
+                        position: latlng
+                    });
+
+                    marker.setMap(map);
+                },
+                function(error) {
+                    alert(error.message);
+                },
+                {
+                   enableHighAccuracy: true
+                });
+        }
 
 	</script>
 	<h:form prependId="false">
@@ -137,45 +160,49 @@
 				<h:panelGrid columns="1" cellpadding="5" rendered="#{empty userInformation.login}">
 					
 					<p:outputLabel value="Ваше имя"/>
-					<p:inputText value="#{createLocationsBean.nonAutorizedUser.name}"/>
+					<p:inputText value="#{createLocationsBean.nonAutorizedUser.name}"
+						required="true" label="Name" 
+						requiredMessage="#{messageBean.nameRequired}"/>
 					<br />
 					
 					<h:panelGrid columns="2">
 						<p:outputLabel value="Номер контактного телефона" />
 						<i class="fa fa-phone-square"></i>
 					</h:panelGrid>
-					
-					<p:commandButton   value="Добавить" update="display"
-						oncomplete="PF('dlg').show()" />
-					
-						
-					<p:dialog header="Введите номер" modal="true"
-						showEffect="bounce" widgetVar="dlg" resizable="false">
-						<p:panelGrid columns="2" id="display">
-							<p:inputMask id="inputTel"
-								value="#{createLocationsBean.nonAutorizedUser.telephone}" 
-								 mask="(999) 999-9999"/>
-							<p:commandButton value="Добавить" oncomplete="PF('dlg').hide();" />
-						</p:panelGrid>
-					</p:dialog>
-
+			
+			
+					<p:inputMask id="inputTel"
+							value="#{createLocationsBean.nonAutorizedUser.telephone}" 
+							 mask="(999) 999-9999" required="true"
+							 requiredMessage="#{messageBean.telephoneRequired}"/>
 				</h:panelGrid>
-				<br />
+	
 
-				<p:outputLabel value="Определите начало события" />
+				
+				<br />
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Определите начало события." />
+					<i class="fa fa-calendar"></i>
+				</h:panelGrid>
+				
 				<p:calendar id="start" value="#{createLocationsBean.startDate}"
-					pattern="MM/dd/yyyy HH:mm" />
+					pattern="MM/dd/yyyy HH:mm" required="true"
+					requiredMessage="#{messageBean.dateRequired}"/>
 
 				<BR />
 
-				<p:outputLabel value="Определите предпологаемый конец" />
+				<h:panelGrid columns="2">	
+					<p:outputLabel value="Определите предпологаемый конец." />
+					<i class="fa fa-calendar"></i>
+				</h:panelGrid>
+				
 				<p:calendar id="end" value="#{createLocationsBean.endDate}"
 					pattern="MM/dd/yyyy HH:mm" />
 
 				<br />
 				<p:outputLabel value="Что будет" />
 				<p:selectOneMenu  value="#{createLocationsBean.description}"
-					style="width:160px">
+					style="width:160px" required="true">
 					<f:selectItem itemLabel="Прогулка" itemValue="walk" />
 					<f:selectItem itemLabel="Общественный праздник" itemValue="celebration" />
 					<f:selectItem itemLabel="Пикник" itemValue="piknik" />
@@ -187,18 +214,26 @@
 
 				<p:outputLabel value="Адресс" />
 
-				<h:panelGrid columns="2">
-					<p:autoComplete id="address" maxResults="6"
+				<h:panelGrid columns="3">
+					<p:autoComplete id="address" maxResults="6" widgetVar="geoLoc"
 						value="#{createLocationsBean.address}"
 						completeMethod="#{createLocationsBean.completeAddress}"
-						onkeydown="geocode()" style="width: 40%">
+						onkeydown="geocode()" style="width: 40%" required="true"
+						requiredMessage="#{messageBean.addressRequired}" >								
 					</p:autoComplete>
 
 
 					<p:commandButton id="btn" icon="ui-icon fa fa-eye" title="показать на карте"
 						actionListener="#{createLocationsBean.addAddressMarkerOnMap}" onclick="PF('geoMapShow').show();" 
-						update="geoGmap">
+						update="geoGmap" immediate="true">
 					</p:commandButton>
+					
+					<p:commandButton  onclick="findMe(); PF('geoMapLocationShow').show();" 
+						icon="ui-icon fa fa-location-arrow"
+					 	actionListener="#{createLocationsBean.myLocation()}" validateClient="false" 
+					 	immediate="true" title="определить мое местоположение" update="geoLoc" >
+				    </p:commandButton>
+				
 
 					<p:dialog id="gmapDialog" widgetVar="geoMapShow" width="625"
 						height="400" modal="true">
@@ -211,23 +246,42 @@
 						</p:gmap>
 					</p:dialog>
 				</h:panelGrid>
+					
+				<p:dialog id="gmapDialogLocation" widgetVar="geoMapLocationShow" width="625"
+							height="400" modal="true">
+					<p:gmap id="geoLoc" widgetVar="geoLoc"
+						center="#{createLocationsBean.centerGeoMap}" zoom="12"
+						type="hybrid" model="#{createLocationsBean.geoModel}"
+						style="width:100%;height:400px">
+						<p:ajax event="geocode"
+							listener="#{createLocationsBean.onGeocode}" update="@this" />
+					</p:gmap>
+				</p:dialog>
+				
+				
+				  <h:inputHidden id="lat" value="#{createLocationsBean.lat}" />
+        		  <h:inputHidden id="lng" value="#{createLocationsBean.lng}" />
+				
+				
+				<br />
+				
+				<p:messages id="messages"  autoUpdate="true" closable="true" />
+				
+				<p:commandButton value="Сохранить"
+					actionListener="#{createLocationsBean.saveLocation(
+									userInformation.login, userInformation.password)}"
+					action="afterSave" rendered="#{not empty userInformation.login}" >
+				</p:commandButton>
 
-				<br />	
-					<p:commandButton value="Сохранить" actionListener="#{createLocationsBean.saveLocation(
-										userInformation.login, userInformation.password)}"
-										
-										
-				action="afterSave" rendered="#{not empty userInformation.login}">
+				<p:commandButton value="Сохранить"
+					actionListener="#{createLocationsBean.saveLocationNonAutorized()}"
+					action="afterSave" rendered="#{empty userInformation.login}" update="@form">
 				</p:commandButton>
-				
-				<p:commandButton value="Сохранить" actionListener="#{createLocationsBean.saveLocationNonAutorized()}"					
-					action="afterSave" rendered="#{empty userInformation.login}">
-				</p:commandButton>
-				
-				
-				
-						
-			</h:panelGrid>
+
+
+
+
+				</h:panelGrid>
 			<BR /> <BR /> <BR /> <BR /> <BR /> <BR />
 
 		</div>

@@ -63,8 +63,8 @@ public class LocationsServiceImpl implements LocationsService{
 	}
 	
 	@Override
-	public List<Locations> findByAddress(String address, String num) {
-		return locationsDao.findByAddress(address, num);
+	public List<Locations> findByAddress(String address, String num, boolean active) {
+		return locationsDao.findByAddress(address, num , active);
 	}
 
 	@Override
@@ -72,5 +72,9 @@ public class LocationsServiceImpl implements LocationsService{
 		return locationsDao.findById(id);
 	}
 
+	@Override
+	public List<Locations> findAllActiveLocations() {
+		return locationsDao.findAllActiveLocations();
+	}
 	
 }

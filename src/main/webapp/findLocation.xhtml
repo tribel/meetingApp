@@ -47,7 +47,15 @@
 					<br />
 
 				</b:listLinks>
-
+				
+				<p:growl id="ActiveMsg" />
+				
+				<p:outputLabel value="Только актуальные"/>
+				<p:inputSwitch value="#{findLocationsBeans.activeStatusFlag}">
+				</p:inputSwitch>
+				
+				<br />
+				<br />
 				<p:commandButton value="Найти" ajax="true" update="contId2"
 					id="ajaxcb" look="primary"
 					actionListener="#{findLocationsBeans.findFilteredLocation()}" />

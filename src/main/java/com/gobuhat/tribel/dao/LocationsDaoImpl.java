@@ -1,5 +1,7 @@
 package com.gobuhat.tribel.dao;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,7 +21,7 @@ public class LocationsDaoImpl implements LocationsDao{
 
 	@Override
 	public List<Locations> findAllLocations() {
-		TypedQuery<Locations> query = em.createQuery("SELECT l FROM Locations l", Locations.class);
+		TypedQuery<Locations> query = em.createQuery("SELECT l FROM Locations l ORDER BY l.startTime DESC", Locations.class);
 		return query.getResultList();
 	}
 
@@ -52,18 +54,32 @@ public class LocationsDaoImpl implements LocationsDao{
 	}
 
 	@Override
-	public List<Locations> findByAddress(String address , String num) {
+	public List<Locations> findByAddress(String address, String num,
+			boolean active) {
 		TypedQuery<Locations> query;
-		
-		if ( num != null) {
-			 query = em.createQuery("SELECT l FROM Locations l WHERE l.address = ?1 AND l.addNumber = ?2" , Locations.class);
-			 query.setParameter(2, num);
+
+		if (num != null) {
+			query = active ? em
+					.createQuery(
+							"SELECT l FROM Locations l WHERE l.address = ?1 AND l.addNumber = ?2 AND l.active = 1 ORDER BY l.startTime DESC",
+							Locations.class)
+					: em.createQuery(
+							"SELECT l FROM Locations l WHERE l.address = ?1 AND l.addNumber = ?2 ORDER BY l.startTime DESC",
+							Locations.class);
+
+			query.setParameter(2, num);
 		} else {
-			 query = em.createQuery("SELECT l FROM Locations l WHERE l.address = ?1" , Locations.class);
-			 
+			query = active ? em
+					.createQuery(
+							"SELECT l FROM Locations l WHERE l.address = ?1 AND l.active = 1 ORDER BY l.startTime DESC",
+							Locations.class)
+					: em.createQuery(
+							"SELECT l FROM Locations l WHERE l.address = ?1 ORDER BY l.startTime DESC",
+							Locations.class);
+
 		}
 		query.setParameter(1, address);
-		
+
 		return query.getResultList();
 	}
 
@@ -71,6 +87,13 @@ public class LocationsDaoImpl implements LocationsDao{
 	public Locations findById(int id) {
 		Locations tmp = em.find(Locations.class, id);
 		return tmp;
+	}
+
+	@Override
+	public List<Locations> findAllActiveLocations() {
+		TypedQuery<Locations> query = em.createQuery("SELECT l FROM Locations l WHERE ?1 < l.endTime", Locations.class);
+		query.setParameter(1, new Timestamp(new Date().getTime()));
+		return query.getResultList();
 	}	
-	
+
 }

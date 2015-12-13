@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -34,6 +36,7 @@ public class FindLocationsBeans {
 
 	private String tableMapFlag;
 	private boolean booltableMapFlag;
+	private boolean activeStatusFlag = true;
 
 	private String filterAddress = new String();
 	private Date filterDate;
@@ -47,7 +50,8 @@ public class FindLocationsBeans {
 	@PostConstruct
 	public void init() {
 		//this.findFilteredLocation();
-		this.findAllLocatoins();
+		//this.findAllLocatoins();
+		this.findAllActiveLocations();
 	}
 	
 	public LocationsService getLocationsService() {
@@ -110,6 +114,16 @@ public class FindLocationsBeans {
 		return mapModel;
 	}
 
+	
+	
+	public boolean isActiveStatusFlag() {
+		return activeStatusFlag;
+	}
+
+	public void setActiveStatusFlag(boolean activeStatusFlag) {
+		this.activeStatusFlag = activeStatusFlag;
+	}
+
 	public void setMapModel(MapModel mapModel) {
 		this.mapModel = mapModel;
 	}
@@ -132,20 +146,28 @@ public class FindLocationsBeans {
 		locList = locationsService.findAllLocations();
 
 	}
+	
+	public void findAllActiveLocations() {
+		locList = locationsService.findAllActiveLocations();
+	}
 
 	public void findFilteredLocation() {
-		if ( filterAddress.equals("") && filterDate == null) {
-			locList = locationsService.findAllLocations();
+		if ( filterAddress.equals("") && filterDate == null ) {
+			locList = activeStatusFlag ? 
+						 locationsService.findAllActiveLocations() :
+						 locationsService.findAllLocations();
 			mapViewController();
 			return;
 		}
 		
 		if ( !filterAddress.equals("")) {
-			locList = locationsService.findByAddress(filterAddress, null);
+			locList = locationsService.findByAddress(filterAddress, null, activeStatusFlag);
 		} else {
 			locList = locationsService.findAllLocations();
 		}
 
+		
+		// data base finding!!!!
 		if (filterDate != null) {
 			Iterator<Locations> itr = locList.iterator();
 			Instant instant = Instant.ofEpochMilli(filterDate.getTime());
@@ -154,8 +176,8 @@ public class FindLocationsBeans {
 
 			while (itr.hasNext()) {
 				Locations tmpLocat = itr.next();
-				if (!tmpLocat.getStartTime().toLocalDateTime().toLocalDate().equals(tmpFilterDate)
-						&& !tmpLocat.getEndTime().toLocalDateTime().toLocalDate().equals(tmpFilterDate)) {
+				if (tmpLocat.getStartTime().toLocalDateTime().toLocalDate().isAfter(tmpFilterDate)
+						|| tmpLocat.getEndTime().toLocalDateTime().toLocalDate().isBefore(tmpFilterDate)) {
 
 					itr.remove();
 				}
@@ -179,19 +201,12 @@ public class FindLocationsBeans {
 		List<String> results = new ArrayList<>();
 		List<Locations> list = locationsService.findAllLocations();
 		
-		/*
-		 *  fix this loop !!!!!
-		 */
+		// do data base orient. method  findAddressLike %//% . to avoid slow performance
+		// String.contains
 		
 		for( int i = 0; i < list.size(); i++ ) {
-			if (list.get(i).getAddress().toLowerCase().startsWith(query.toLowerCase()) ) {
+			if(list.get(i).getAddress().toLowerCase().contains(query.toLowerCase())) {
 				results.add(list.get(i).getAddress());
-			}
-			String [] sArray = list.get(i).getAddress().toLowerCase().split(" ");
-			if( sArray.length >= 2) {
-				if( sArray[1].startsWith(query.toLowerCase())) {
-					results.add(list.get(i).getAddress());
-				}
 			}
 		}
 		Set<String> set = new HashSet<String>(results);
@@ -199,6 +214,11 @@ public class FindLocationsBeans {
 		results.addAll(set);
 		
 		return results;
+	}
+	
+	public void addActiveLocationsAjaxMessage() {
+		String summary = activeStatusFlag ? "Искать только актуальные" : "Искать все";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
 	}
 
 }

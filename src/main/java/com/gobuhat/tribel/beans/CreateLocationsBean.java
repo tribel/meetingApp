@@ -132,6 +132,7 @@ public class CreateLocationsBean {
 
 	public void setLng(double lng) {
 		this.lng = lng;
+		System.out.println("ya tyt " + lng);
 	}
 	
 	public MapModel getGeoModel() {
@@ -145,8 +146,6 @@ public class CreateLocationsBean {
 	private Locations sameSaveLocation() {
 		int coordIndex = geoAddressList.indexOf(address);
 	
-		
-		
 		creatingLocation.setPublishTime(new Timestamp(new Date().getTime()));
 		creatingLocation.setStartTime(new Timestamp(startDate.getTime()));
 		creatingLocation.setEndTime(new Timestamp(endDate.getTime()));
@@ -196,6 +195,12 @@ public class CreateLocationsBean {
 			int ind = geoAddressList.indexOf(this.address);
 			geoModel.addOverlay(new Marker(geoResultList.get(ind).getLatLng(), this.address));
 		}
+	}
+	
+	public void myLocation() {
+		geoAddressList.add("улица Севастопольская 22, Киев , Украина");
+		System.out.println("Lalochaka");
+		System.out.println(lat + "   " + lng);
 	}
 	
 }

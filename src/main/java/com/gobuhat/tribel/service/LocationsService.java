@@ -19,7 +19,10 @@ public interface LocationsService {
 
 	public void editLocation(Locations loc);
 	
-	public List<Locations> findByAddress(String address ,String num);
+	public List<Locations> findByAddress(String address ,String num, boolean active);
 	
 	public Locations findById(int id);
+	
+	public List<Locations> findAllActiveLocations();
+
 }
