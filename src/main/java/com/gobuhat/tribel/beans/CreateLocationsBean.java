@@ -17,6 +17,7 @@ import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
+import org.springframework.context.annotation.Scope;
 
 import com.gobuhat.tribel.entity.Locations;
 import com.gobuhat.tribel.entity.Users;
@@ -42,7 +43,7 @@ public class CreateLocationsBean {
 	private Date endDate;
 	private String description;
 	private String wishes;
-	private String address = new String();
+	private String address = "";
 	private double lat;
 	private double lng;
 	
@@ -186,21 +187,20 @@ public class CreateLocationsBean {
 	}
 	
 	public Collection<String> completeAddress(String query) {
+		System.out.println("Tyt uia = " + this.address);
 		return geoAddressList;
 	}
 	
 	public void addAddressMarkerOnMap() {
-		
+		System.out.println("Mafia = " + this.address);
 		if ( !this.address.equals("") ) {
 			int ind = geoAddressList.indexOf(this.address);
 			geoModel.addOverlay(new Marker(geoResultList.get(ind).getLatLng(), this.address));
 		}
+		System.out.println("KONEC");
 	}
 	
 	public void myLocation() {
-		geoAddressList.add("улица Севастопольская 22, Киев , Украина");
-		System.out.println("Lalochaka");
-		System.out.println(lat + "   " + lng);
 	}
 	
 }

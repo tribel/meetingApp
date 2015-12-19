@@ -215,13 +215,14 @@
 				<p:outputLabel value="Адресс" />
 
 				<h:panelGrid columns="3">
-					<p:autoComplete id="address" maxResults="6" widgetVar="geoLoc"
+					<p:autoComplete id="address" maxResults="6" 
 						value="#{createLocationsBean.address}"
 						completeMethod="#{createLocationsBean.completeAddress}"
 						onkeydown="geocode()" style="width: 40%" required="true"
 						requiredMessage="#{messageBean.addressRequired}" >								
 					</p:autoComplete>
-
+					
+					
 
 					<p:commandButton id="btn" icon="ui-icon fa fa-eye" title="показать на карте"
 						actionListener="#{createLocationsBean.addAddressMarkerOnMap}" onclick="PF('geoMapShow').show();" 
