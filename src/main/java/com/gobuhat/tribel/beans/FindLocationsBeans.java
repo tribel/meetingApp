@@ -49,8 +49,6 @@ public class FindLocationsBeans {
 
 	@PostConstruct
 	public void init() {
-		//this.findFilteredLocation();
-		//this.findAllLocatoins();
 		this.findAllActiveLocations();
 	}
 	

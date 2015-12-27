@@ -91,7 +91,8 @@ public class LocationsDaoImpl implements LocationsDao{
 
 	@Override
 	public List<Locations> findAllActiveLocations() {
-		TypedQuery<Locations> query = em.createQuery("SELECT l FROM Locations l WHERE ?1 < l.endTime", Locations.class);
+		TypedQuery<Locations> query = em.createQuery("SELECT l FROM Locations l WHERE ?1 < l.endTime ORDER BY l.startTime DESC",
+														Locations.class);
 		query.setParameter(1, new Timestamp(new Date().getTime()));
 		return query.getResultList();
 	}	

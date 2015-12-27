@@ -13,8 +13,8 @@ public class MessageBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private final String nameRequired = "Поле имени не может быть пустым!";
-	private final String telephoneRequired = "Телефон обязательное поле!";
-	private final String dateRequired = "Время начала обязательно для заполнения!";
+	private final String telephoneRequired = "Телефон обязательное поле! ";
+	private final String dateRequired = "Время начала обязательно для заполнения! ";
 	private final String addressRequired = "Поле адреса не может быть пустым!";
 	
 	public String getNameRequired() {

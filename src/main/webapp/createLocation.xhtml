@@ -121,21 +121,25 @@
 			
 		}
 		
+		function reverseGeocode() {
+	        var lat = document.getElementById('lat').value,
+	            lng = document.getElementById('lng').value;
+	 
+	        PF('geoLoc').reverseGeocode(lat, lng);
+	    }
+		
 		function findMe() {
             navigator.geolocation.getCurrentPosition(
                 function(position) {
                     var map = PF('geoLoc').getMap(),
                     latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
                     document.getElementById('lat').value = position.coords.latitude;
                     document.getElementById('lng').value = position.coords.longitude;
                     
                     map.setCenter(latlng);
-
                     var marker = new google.maps.Marker({
                         position: latlng
                     });
-
                     marker.setMap(map);
                 },
                 function(error) {
@@ -145,7 +149,6 @@
                    enableHighAccuracy: true
                 });
         }
-
 	</script>
 	<h:form prependId="false">
 
@@ -156,7 +159,7 @@
 	
 		<div style="width: 70%; margin: 0 auto;">
 
-			<h:panelGrid columns="1" cellpadding="5" >
+			<h:panelGrid columns="1" cellpadding="5" id="mainGrid">
 				<h:panelGrid columns="1" cellpadding="5" rendered="#{empty userInformation.login}">
 					
 					<p:outputLabel value="Ваше имя"/>
@@ -226,12 +229,12 @@
 
 					<p:commandButton id="btn" icon="ui-icon fa fa-eye" title="показать на карте"
 						actionListener="#{createLocationsBean.addAddressMarkerOnMap}" onclick="PF('geoMapShow').show();" 
-						update="geoGmap" immediate="true">
+						update="geoGmap" >
 					</p:commandButton>
 					
 					<p:commandButton  onclick="findMe(); PF('geoMapLocationShow').show();" 
 						icon="ui-icon fa fa-location-arrow"
-					 	actionListener="#{createLocationsBean.myLocation()}" validateClient="false" 
+					 	 validateClient="false" 
 					 	immediate="true" title="определить мое местоположение" update="geoLoc" >
 				    </p:commandButton>
 				
@@ -246,19 +249,21 @@
 								listener="#{createLocationsBean.onGeocode}" update="@this" />
 						</p:gmap>
 					</p:dialog>
-				</h:panelGrid>
-					
-				<p:dialog id="gmapDialogLocation" widgetVar="geoMapLocationShow" width="625"
-							height="400" modal="true">
-					<p:gmap id="geoLoc" widgetVar="geoLoc"
-						center="#{createLocationsBean.centerGeoMap}" zoom="12"
-						type="hybrid" model="#{createLocationsBean.geoModel}"
-						style="width:100%;height:400px">
-						<p:ajax event="geocode"
-							listener="#{createLocationsBean.onGeocode}" update="@this" />
-					</p:gmap>
-				</p:dialog>
 				
+					
+					<p:dialog id="gmapDialogLocation" widgetVar="geoMapLocationShow" width="625"
+								height="400" modal="true">
+						<p:gmap id="geoLoc" widgetVar="geoLoc"
+							center="#{createLocationsBean.centerGeoMap}" zoom="12"
+							type="hybrid" model="#{createLocationsBean.geoModel}"
+							style="width:100%;height:400px">
+							<p:ajax event="reverseGeocode"
+								listener="#{createLocationsBean.onReverseGeocode}" update="@this" />
+						</p:gmap>
+						<p:outputLabel value="Установить этот адресс как желаемый ? " />
+						<p:commandButton icon="ui-icon fa fa-check" onclick="reverseGeocode()"  value="Да" update="@form"/>
+					</p:dialog>
+				</h:panelGrid>
 				
 				  <h:inputHidden id="lat" value="#{createLocationsBean.lat}" />
         		  <h:inputHidden id="lng" value="#{createLocationsBean.lng}" />
