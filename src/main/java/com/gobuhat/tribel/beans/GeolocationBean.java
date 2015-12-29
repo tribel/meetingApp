@@ -2,7 +2,6 @@ package com.gobuhat.tribel.beans;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.Scope;
 

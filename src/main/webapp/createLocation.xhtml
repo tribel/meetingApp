@@ -11,9 +11,13 @@
 	<style type="text/css">
 		.ui-icon {
 			text-indent: 0;
-		} 
-	</style>
-	
+		}
+
+		.ui-growl {
+			top: 20%;
+		}
+</style>
+
 	<script src="http://maps.google.com/maps/api/js?sensor=true"
 		type="text/javascript"></script>
 
@@ -30,7 +34,7 @@
 
 
 	<b:navBar brand="Главная" brandHref="home.xhtml#" inverse="true"
-		fixed="top">
+		fixed="top"  >
 		<b:navbarLinks>
 			<b:navLink value="О нас" href="about.xhtml#"></b:navLink>
 			<b:navLink value="Контакты" href="contacts.xhtml#"></b:navLink>
@@ -151,8 +155,9 @@
         }
 	</script>
 	<h:form prependId="false">
-
+		 <p:growl id = "growl" />
 	<b:container id="contMap">
+	
 		<div style="width: 20%; margin: 0 auto;"> 
 			<h2><b:label text="Заполните форму" />#{' '}</h2>
 		</div>
@@ -179,9 +184,7 @@
 							 mask="(999) 999-9999" required="true"
 							 requiredMessage="#{messageBean.telephoneRequired}"/>
 				</h:panelGrid>
-	
-
-				
+			
 				<br />
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Определите начало события." />
@@ -242,7 +245,7 @@
 					<p:dialog id="gmapDialog" widgetVar="geoMapShow" width="625"
 						height="400" modal="true">
 						<p:gmap id="geoGmap" widgetVar="geoMap"
-							center="#{createLocationsBean.centerGeoMap}" zoom="6"
+							center="#{createLocationsBean.centerGeoMap}" zoom="10"
 							type="hybrid" model="#{createLocationsBean.geoModel}"
 							style="width:100%;height:400px">
 							<p:ajax event="geocode"
@@ -252,16 +255,17 @@
 				
 					
 					<p:dialog id="gmapDialogLocation" widgetVar="geoMapLocationShow" width="625"
-								height="400" modal="true">
+								height="450" modal="true" header="#{createLocationsBean.address}">
 						<p:gmap id="geoLoc" widgetVar="geoLoc"
 							center="#{createLocationsBean.centerGeoMap}" zoom="12"
 							type="hybrid" model="#{createLocationsBean.geoModel}"
 							style="width:100%;height:400px">
 							<p:ajax event="reverseGeocode"
-								listener="#{createLocationsBean.onReverseGeocode}" update="@this" />
+								listener="#{createLocationsBean.onReverseGeocode}" update="address" />
 						</p:gmap>
 						<p:outputLabel value="Установить этот адресс как желаемый ? " />
-						<p:commandButton icon="ui-icon fa fa-check" onclick="reverseGeocode()"  value="Да" update="@form"/>
+						<p:commandButton icon="ui-icon fa fa-check" onclick="reverseGeocode()"  value="Да" 
+										update="growl" actionListener="#{createLocationsBean.showUpdateAddressMsg}"/>
 					</p:dialog>
 				</h:panelGrid>
 				
@@ -270,7 +274,7 @@
 				
 				
 				<br />
-				
+		
 				<p:messages id="messages"  autoUpdate="true" closable="true" />
 				
 				<p:commandButton value="Сохранить"

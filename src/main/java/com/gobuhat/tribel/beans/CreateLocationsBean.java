@@ -7,7 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -216,14 +219,18 @@ public class CreateLocationsBean {
 	}
 	
 	public void onReverseGeocode(ReverseGeocodeEvent event) {
-		//geoModel = new DefaultMapModel();
 		if(event.getAddresses() != null && !event.getAddresses().isEmpty()) {
 			this.address = event.getAddresses().get(0);
 		}
-		System.out.println("YA GARI I LOID ");
-		
-		System.out.println(this.address);
-		
+	}
+	
+	private  void addMessage(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+	
+	public void showUpdateAddressMsg(ActionEvent actionEvent) {
+		this.addMessage("Ваше местополежение задано");
 	}
 	
 }
