@@ -21,11 +21,22 @@
 
 
 	<h:outputStylesheet library="css" name="style.css" />
+	
+	<style type="text/css">
+		.ui-icon {
+			text-indent: 0;
+		}
+		
+		.ui-growl {
+			top: 15%;
+		}
+	</style>
+	
 </h:head>
 <h:body>
 	#{findLocationsBeans.findFilteredLocation()}
 	<h:form styleClass="form-signin-find-location">
-
+		 <p:growl id = "growl" />
 		<b:container id="contId">
 
 			<b:column col-sm="3" col-md="2" styleClass="sidebar">
@@ -52,6 +63,7 @@
 				
 				<p:outputLabel value="Только актуальные"/>
 				<p:inputSwitch value="#{findLocationsBeans.activeStatusFlag}">
+					<p:ajax listener="#{findLocationsBeans.addActiveLocationsAjaxMessage}" update="growl"/>
 				</p:inputSwitch>
 				
 				<br />
@@ -120,22 +132,33 @@
 							</f:facet>
 							<h:outputText value="#{item.description}" />
 						</h:column>
-						<h:column rendered="#{item.wishes == null}">
-							<f:facet name="header">
-								<h:outputText value="Пожелания" />
-							</f:facet>
-
-							<h:outputText value="#{item.wishes}" />
-
-						</h:column>
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="Адресс" />
 							</f:facet>
 							<h:outputText value="#{item.address} #{item.addNumber}" />
 						</h:column>
-
+						<h:column>
+							<p:commandButton id="detBtn" icon="ui-icon fa fa-bars" title="детали"/>
+								
+							<p:overlayPanel  for="detBtn" hideEffect="fade" dynamic="true" style="width:600px">
+								<p:commandButton  icon="ui-icon fa fa-map-marker" title="показать на карте"
+									actionListener="#{findLocationsBeans.addMarkerTableValue( item )}" 
+									onclick="PF('geoMapShow').show();"  update="geoGmap"/>
+								
+								<p:dialog id="gmapDialog" widgetVar="geoMapShow" width="625"
+									height="400" modal="true">
+									<p:gmap id="geoGmap" widgetVar="geoGMap"
+										center="#{findLocationsBeans.centerTableGeoMap}" zoom="10"
+										type="hybrid" model="#{findLocationsBeans.tableMapModel}"
+										style="width:100%;height:400px">
+									</p:gmap>	
+							    </p:dialog>		
+							</p:overlayPanel>
+						</h:column>
 					</h:dataTable>
+					
+					
 				</b:column>
 
 			</b:column>

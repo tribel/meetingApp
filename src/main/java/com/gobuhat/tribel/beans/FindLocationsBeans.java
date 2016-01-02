@@ -42,6 +42,8 @@ public class FindLocationsBeans {
 	private Date filterDate;
 	
 	private MapModel mapModel = new DefaultMapModel();
+	private MapModel tableMapModel = new DefaultMapModel();
+	private String centerTableGeoMap = "50.27, 30.30";
 	
 
 	public FindLocationsBeans() {
@@ -112,8 +114,22 @@ public class FindLocationsBeans {
 		return mapModel;
 	}
 
-	
-	
+	public MapModel getTableMapModel() {
+		return tableMapModel;
+	}
+
+	public void setTableMapModel(MapModel tableMapModel) {
+		this.tableMapModel = tableMapModel;
+	}
+
+	public String getCenterTableGeoMap() {
+		return centerTableGeoMap;
+	}
+
+	public void setCenterTableGeoMap(String centerTableGeoMap) {
+		this.centerTableGeoMap = centerTableGeoMap;
+	}
+
 	public boolean isActiveStatusFlag() {
 		return activeStatusFlag;
 	}
@@ -197,7 +213,8 @@ public class FindLocationsBeans {
 	
 	public Collection<String> completeAddress(String query) {
 		List<String> results = new ArrayList<>();
-		List<Locations> list = locationsService.findAllLocations();
+		List<Locations> list = activeStatusFlag ? locationsService.findAllActiveLocations() :
+												  locationsService.findAllLocations();
 		
 		// do data base orient. method  findAddressLike %//% . to avoid slow performance
 		// String.contains
@@ -218,5 +235,10 @@ public class FindLocationsBeans {
 		String summary = activeStatusFlag ? "Искать только актуальные" : "Искать все";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
 	}
-
+	
+	public void addMarkerTableValue(Locations l) {
+		tableMapModel = new DefaultMapModel();
+		tableMapModel.addOverlay(new Marker(new LatLng(l.getLat(), l.getLng()), l.getUser().getName()));
+	}
+ 
 }
