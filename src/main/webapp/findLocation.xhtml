@@ -139,22 +139,23 @@
 							<h:outputText value="#{item.address} #{item.addNumber}" />
 						</h:column>
 						<h:column>
-							<p:commandButton id="detBtn" icon="ui-icon fa fa-bars" title="детали"/>
-								
-							<p:overlayPanel  for="detBtn" hideEffect="fade" dynamic="true" style="width:600px">
-								<p:commandButton  icon="ui-icon fa fa-map-marker" title="показать на карте"
+							<p:commandButton  icon="ui-icon fa fa-bars" title="детали"
 									actionListener="#{findLocationsBeans.addMarkerTableValue( item )}" 
 									onclick="PF('geoMapShow').show();"  update="geoGmap"/>
 								
-								<p:dialog id="gmapDialog" widgetVar="geoMapShow" width="625"
-									height="400" modal="true">
-									<p:gmap id="geoGmap" widgetVar="geoGMap"
+							<p:dialog id="gmapDialog" widgetVar="geoMapShow" width="625"
+									height="400" modal="true" >
+								
+								<p:commandButton id="detBtn" icon="ui-icon fa fa-map-marker" title="показать на карте"
+												 update="geoGmap"	/>
+								<p:overlayPanel  for="detBtn" hideEffect="fade" dynamic="true" style="width:600px">	
+									<p:gmap id="geoGmap" widgetVar="geoGmap"
 										center="#{findLocationsBeans.centerTableGeoMap}" zoom="10"
 										type="hybrid" model="#{findLocationsBeans.tableMapModel}"
 										style="width:100%;height:400px">
 									</p:gmap>	
-							    </p:dialog>		
-							</p:overlayPanel>
+								</p:overlayPanel> 
+							</p:dialog>
 						</h:column>
 					</h:dataTable>
 					
